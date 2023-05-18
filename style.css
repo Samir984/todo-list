@@ -1,0 +1,146 @@
+*,
+*::before,
+*::after {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html {
+  font-size: 62.5%;
+}
+
+body {
+  font-family: sans-serif;
+}
+
+svg {
+  width: 5rem;
+  border-radius: 9px;
+  padding: 1rem 1rem;
+  stroke: #000000;
+}
+
+svg:hover,
+svg:active {
+  background-color: #e1ede3;
+}
+
+.todo-container {
+  background-color: #f7f7f7;
+  padding: 2.4rem 1rem;
+  width: 80rem;
+  margin: 10rem auto;
+  margin-bottom: 1rem;
+  border: 1px solid green;
+}
+
+/* .todolist {
+} */
+
+.heading {
+  font-size: 3.6rem;
+  text-align: center;
+  color: green;
+  margin-bottom: 1rem;
+}
+.taskinput {
+  border: none;
+  width: 90%;
+  font-size: 2rem;
+  color: #555;
+  font-weight: 700;
+  padding: 2rem 1rem;
+  margin: 2rem 1rem;
+}
+.taskinput:focus {
+  outline: none;
+}
+
+.tasklist-container {
+  width: 80rem;
+  background-color: #e9eaed;
+  margin: auto auto;
+}
+
+.task-item {
+  display: flex;
+  align-items: center;
+  gap: 2.4rem;
+  padding: 1.2rem;
+  margin-bottom: 0.8rem;
+}
+
+.task-item:not(:last-child) {
+  border-bottom: 1px solid black;
+}
+.task-item:hover,
+.task-item:active {
+  background-color: #ffffff;
+}
+.task-item:hover .task-detail,
+.task-item:active .task-detail {
+  background-color: #fff;
+}
+
+.task-detail {
+  font-size: 1.8rem;
+  font-weight: bolder;
+  flex: 70%;
+  padding: 1rem;
+  border: none;
+  outline: none;
+  background-color: #e9eaed;
+}
+
+.addtask {
+  display: inline-block;
+  font-size: 4rem;
+  background-color: rgb(87, 218, 102);
+  padding: 0.2rem 1rem;
+  transform: translateY(9px);
+}
+.addtask:hover,
+.addtask:active {
+  background-color: rgb(13, 138, 28);
+}
+.tick {
+  fill: none;
+}
+
+.tick-icon:hover,
+.tick-icon:active {
+  stroke: rgb(10, 184, 10);
+}
+
+.edit-icon:hover,
+.edit-icon:active {
+  fill: rgb(36, 159, 36);
+}
+.delete-icon:hover,
+.delete-icon:active {
+  fill: red;
+}
+
+.notask {
+  width: 80rem;
+  padding: 1rem;
+  color: green;
+  font-size: 2rem;
+  text-align: center;
+  text-transform: uppercase;
+}
+
+.taskcomplete {
+  text-decoration: line-through;
+  background-color: #fff;
+  color: green;
+}
+
+.editactive {
+  color: green;
+}
+.checked {
+  stroke: rgb(10, 184, 10);
+  fill: rgb(34, 227, 27);
+}
