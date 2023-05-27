@@ -16,13 +16,14 @@ body {
 
 svg {
   width: 5rem;
-  border-radius: 9px;
+  /* border-radius: 9px; */
   padding: 1rem 1rem;
   stroke: #000000;
 }
 
 svg:hover,
 svg:active {
+  border-radius: 3rem;
   background-color: #e1ede3;
 }
 
@@ -85,7 +86,6 @@ svg:active {
 
 .task-detail {
   font-size: 1.8rem;
-  font-weight: bolder;
   flex: 70%;
   padding: 1rem;
   border: none;
@@ -104,19 +104,11 @@ svg:active {
 .addtask:active {
   background-color: rgb(13, 138, 28);
 }
+
 .tick {
   fill: none;
 }
 
-.tick-icon:hover,
-.tick-icon:active {
-  stroke: rgb(10, 184, 10);
-}
-
-.edit-icon:hover,
-.edit-icon:active {
-  fill: rgb(36, 159, 36);
-}
 .delete-icon:hover,
 .delete-icon:active {
   fill: red;
@@ -133,13 +125,15 @@ svg:active {
 
 .taskcomplete {
   text-decoration: line-through;
-  background-color: #fff;
-  color: green;
+  background-color: #fff !important;
+  font-weight: bolder;
 }
 
-.editactive {
-  color: green;
+.edit-active {
+  stroke: rgb(36, 236, 36);
+  fill: rgb(27, 250, 19);
 }
+
 .checked {
   stroke: rgb(10, 184, 10);
   fill: rgb(34, 227, 27);

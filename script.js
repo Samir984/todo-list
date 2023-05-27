@@ -1,11 +1,10 @@
 "use strict";
 
-//DOM Element
+// DOM Element
 const containerEl = document.querySelector(".todo-container");
 const toDOEl = document.querySelector(".todolist");
-
 const addTaskBtn = document.querySelector(".addtask");
-
+// icon
 let taskCompleteBtn = document.querySelectorAll(".tick-icon");
 let taskEditBtn = document.querySelectorAll(".edit-icon");
 let taskDeleteBtn = document.querySelectorAll(".delete-icon");
@@ -13,7 +12,9 @@ let taskDeleteBtn = document.querySelectorAll(".delete-icon");
 const inputTaskEl = document.querySelector(".taskinput");
 const taskListEl = document.querySelector(".tasklist-container");
 let taskItemEl = document.querySelectorAll(".task-item");
+// if no task in there this element will be displayed
 let ifNoTask;
+let editActive = null; // Variable to track the currently active edit button
 
 const updateDom = function () {
   taskItemEl = document.querySelectorAll(".task-item");
@@ -22,19 +23,13 @@ const updateDom = function () {
   taskDeleteBtn = document.querySelectorAll(".delete-icon");
 };
 
-
-//action on EditBtn click
-
-
-//save action
-
 const addtask = function () {
   let taskContent = inputTaskEl.value;
 
   if (taskContent === "") {
     return;
   } else {
-    //cheaking If No task in append
+    // Checking if there are no tasks to append
     if (ifNoTask) {
       ifNoTask.remove();
     }
@@ -74,34 +69,44 @@ const addtask = function () {
     taskListEl.style.padding = "1rem";
   }
 
-  //updating dom  tree
+  // Updating the DOM tree
   updateDom();
+};
 
-  let newTaskDeleteBtn = taskDeleteBtn[taskDeleteBtn.length - 1];
-  let newTaskCompleteBtn = taskCompleteBtn[taskCompleteBtn.length - 1];
-  let newTaskEditBtn = taskEditBtn[taskEditBtn.length - 1];
+//functionality for delete edit and checked
+taskListEl.addEventListener("click", function (e) {
+  //delete
+  if (e.target.closest(".delete-icon")) {
+    e.target.closest(".task-item").remove();
 
-  newTaskDeleteBtn.addEventListener("click", function () {
-    newTaskDeleteBtn.parentElement.remove();
-    updateDom();
-    if (taskItemEl.length === 0) {
+    if (taskListEl.children.length === 0) {
       ifNoTask = document.createElement("div");
       ifNoTask.setAttribute("class", "notask");
-      ifNoTask.textContent = `NO task in assign Today`;
+      ifNoTask.textContent = `NO task assigned today`;
       taskListEl.appendChild(ifNoTask);
     }
-  });
+  }
 
-  newTaskCompleteBtn.addEventListener("click", function () {
-    newTaskCompleteBtn.nextElementSibling.classList.toggle("taskcomplete");
-    newTaskCompleteBtn.parentElement.classList.toggle("taskcomplete");
-    newTaskCompleteBtn.classList.toggle("checked");
-  });
+  //edit
+  if (e.target.closest(".edit-icon")) {
+    const clicked = e.target.closest(".edit-icon");
+    if (!clicked.classList.contains("edit-active")) {
+        taskEditBtn.forEach(function (t) {
+        t.previousElementSibling.readOnly = "true";
+        t.previousElementSibling.focus();
+        t.classList.remove("edit-active");
+      });
+    }
+    clicked.classList.toggle("edit-active");
+    clicked.previousElementSibling.toggleAttribute("readonly");
+    clicked.previousElementSibling.focus();
+  }
 
-  newTaskEditBtn.addEventListener("click", function () {
-    newTaskEditBtn.classList.toggle("checked");
-    newTaskEditBtn.previousElementSibling.toggleAttribute("readonly");
-    newTaskEditBtn.previousElementSibling.focus();
-    newTaskEditBtn.previousElementSibling.classList.toggle("editactive");
-  });
-};
+  //checked
+  if (e.target.closest(".tick-icon")) {
+    const clicked = e.target.closest(".tick-icon");
+    clicked.parentElement.classList.toggle("taskcomplete");
+    clicked.nextElementSibling.classList.toggle("taskcomplete");
+    clicked.classList.toggle("checked");
+  }
+});
