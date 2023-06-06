@@ -105,10 +105,6 @@ svg:active {
   background-color: rgb(13, 138, 28);
 }
 
-.tick {
-  fill: none;
-}
-
 .delete-icon:hover,
 .delete-icon:active {
   fill: red;
@@ -125,16 +121,19 @@ svg:active {
 
 .taskcomplete {
   text-decoration: line-through;
-  background-color: #fff !important;
+  background-color: #fff;
   font-weight: bolder;
 }
-
-.edit-active {
-  stroke: rgb(36, 236, 36);
-  fill: rgb(27, 250, 19);
+.taskcomplete input {
+  background-color: #fff;
 }
 
-.checked {
+.taskcomplete .tick-icon {
   stroke: rgb(10, 184, 10);
   fill: rgb(34, 227, 27);
+}
+
+.edit-active .edit-icon {
+  stroke: rgb(36, 236, 36);
+  fill: rgb(27, 250, 19);
 }

@@ -14,7 +14,6 @@ const taskListEl = document.querySelector(".tasklist-container");
 let taskItemEl = document.querySelectorAll(".task-item");
 // if no task in there this element will be displayed
 let ifNoTask;
-let editActive = null; // Variable to track the currently active edit button
 
 const updateDom = function () {
   taskItemEl = document.querySelectorAll(".task-item");
@@ -75,6 +74,9 @@ const addtask = function () {
 
 //functionality for delete edit and checked
 taskListEl.addEventListener("click", function (e) {
+  let editbtnclicked = e.target.closest(".edit-icon");
+  let tickbtnclicked = e.target.closest(".tick-icon");
+
   //delete
   if (e.target.closest(".delete-icon")) {
     e.target.closest(".task-item").remove();
@@ -88,25 +90,33 @@ taskListEl.addEventListener("click", function (e) {
   }
 
   //edit
-  if (e.target.closest(".edit-icon")) {
-    const clicked = e.target.closest(".edit-icon");
-    if (!clicked.classList.contains("edit-active")) {
-        taskEditBtn.forEach(function (t) {
+  if (editbtnclicked) {
+    if (!editbtnclicked.parentElement.classList.contains("edit-active")) {
+      taskEditBtn.forEach(function (t) {
         t.previousElementSibling.readOnly = "true";
-        t.previousElementSibling.focus();
-        t.classList.remove("edit-active");
+        t.previousElementSibling.blur();
+        t.parentElement.classList.remove("edit-active");
       });
     }
-    clicked.classList.toggle("edit-active");
-    clicked.previousElementSibling.toggleAttribute("readonly");
-    clicked.previousElementSibling.focus();
+    editbtnclicked.parentElement.classList.toggle("edit-active");
+    editbtnclicked.previousElementSibling.toggleAttribute("readonly");
+    editbtnclicked.previousElementSibling.focus();
+
+    //removing taskcomplete when edit btn in clicked
+    if (editbtnclicked.parentElement.classList.contains("taskcomplete")) {
+      editbtnclicked.parentElement.classList.remove("taskcomplete");
+    }
   }
 
   //checked
-  if (e.target.closest(".tick-icon")) {
-    const clicked = e.target.closest(".tick-icon");
-    clicked.parentElement.classList.toggle("taskcomplete");
-    clicked.nextElementSibling.classList.toggle("taskcomplete");
-    clicked.classList.toggle("checked");
+  if (tickbtnclicked) {
+    tickbtnclicked.parentElement.classList.toggle("taskcomplete");
+
+    //removing edit active on tick btn clicked
+    if (tickbtnclicked.parentElement.classList.contains("edit-active")) {
+      tickbtnclicked.parentElement.classList.remove("edit-active");
+      tickbtnclicked.nextElementSibling.readOnly = "true";
+      tickbtnclicked.nextElementSibling.focus();
+    }
   }
 });
