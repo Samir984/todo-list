@@ -38,7 +38,7 @@ const addtask = function () {
     return;
   } else {
     // Checking if there are no tasks to append
-    if (ifNoTask) {
+    if ((ifNoTask = document.querySelector(".notask"))) {
       ifNoTask.remove();
     }
 
@@ -75,7 +75,6 @@ const addtask = function () {
 
     taskListEl.insertAdjacentHTML("beforeend", task);
     inputTaskEl.value = "";
-    taskListEl.style.padding = "1rem";
   }
 
   // Updating the DOM tree
