@@ -99,6 +99,7 @@ taskListEl.addEventListener("click", function (e) {
       ifNoTask.textContent = `NO task assigned today`;
       taskListEl.appendChild(ifNoTask);
     }
+    // Store the updated value
     storeInLocalStorage();
   }
   if (editbtnclicked) {
@@ -127,8 +128,8 @@ taskListEl.addEventListener("click", function (e) {
     // Update the taskDetail value within the HTML
     const taskInput = taskDetail.value;
     taskDetail.setAttribute("value", taskInput); // Set the value attribute
-
-    storeInLocalStorage(); // Store the updated value
+    // Store the updated value
+    storeInLocalStorage();
   }
 
   //checked
@@ -141,11 +142,9 @@ taskListEl.addEventListener("click", function (e) {
       tickbtnclicked.nextElementSibling.readOnly = "true";
       tickbtnclicked.nextElementSibling.focus();
     }
+    // Store the updated value
     storeInLocalStorage();
-
-    //storing in local storage
   }
 });
 
 restoreFromLocalStorage();
-// localStorage.clear();
