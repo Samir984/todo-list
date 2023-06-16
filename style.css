@@ -59,6 +59,7 @@ svg:active {
 }
 
 .tasklist-container {
+  padding: 1rem;
   width: 80rem;
   background-color: #e9eaed;
   margin: auto auto;

@@ -12,6 +12,7 @@ let taskDeleteBtn = document.querySelectorAll(".delete-icon");
 const inputTaskEl = document.querySelector(".taskinput");
 const taskListEl = document.querySelector(".tasklist-container");
 let taskItemEl = document.querySelectorAll(".task-item");
+let taskDetail = document.querySelectorAll(".task-detail");
 // if no task in there this element will be displayed
 let ifNoTask;
 
@@ -20,8 +21,16 @@ const updateDom = function () {
   taskCompleteBtn = document.querySelectorAll(".tick-icon");
   taskEditBtn = document.querySelectorAll(".edit-icon");
   taskDeleteBtn = document.querySelectorAll(".delete-icon");
+  taskDetail = document.querySelectorAll(".task-detail");
 };
 
+const storeInLocalStorage = function () {
+  localStorage.setItem("itemContainer", taskListEl.innerHTML);
+};
+
+const restoreFromLocalStorage = function () {
+  taskListEl.innerHTML = localStorage.getItem("itemContainer");
+};
 const addtask = function () {
   let taskContent = inputTaskEl.value;
 
@@ -63,6 +72,7 @@ const addtask = function () {
             </svg>
             </div>
 `;
+
     taskListEl.insertAdjacentHTML("beforeend", task);
     inputTaskEl.value = "";
     taskListEl.style.padding = "1rem";
@@ -70,6 +80,8 @@ const addtask = function () {
 
   // Updating the DOM tree
   updateDom();
+  //storing in local storage
+  storeInLocalStorage();
 };
 
 //functionality for delete edit and checked
@@ -87,25 +99,36 @@ taskListEl.addEventListener("click", function (e) {
       ifNoTask.textContent = `NO task assigned today`;
       taskListEl.appendChild(ifNoTask);
     }
+    storeInLocalStorage();
   }
-
-  //edit
   if (editbtnclicked) {
+    updateDom();
+
     if (!editbtnclicked.parentElement.classList.contains("edit-active")) {
       taskEditBtn.forEach(function (t) {
-        t.previousElementSibling.readOnly = "true";
         t.previousElementSibling.blur();
         t.parentElement.classList.remove("edit-active");
+        t.previousElementSibling.readOnly = true;
       });
     }
-    editbtnclicked.parentElement.classList.toggle("edit-active");
-    editbtnclicked.previousElementSibling.toggleAttribute("readonly");
-    editbtnclicked.previousElementSibling.focus();
 
-    //removing taskcomplete when edit btn in clicked
-    if (editbtnclicked.parentElement.classList.contains("taskcomplete")) {
-      editbtnclicked.parentElement.classList.remove("taskcomplete");
+    const parentContainer = editbtnclicked.parentElement; // Parent container of the clicked edit button
+    const taskDetail = parentContainer.querySelector(".task-detail"); // Selecting the task-detail element within the parent container
+
+    parentContainer.classList.toggle("edit-active");
+    taskDetail.focus();
+    taskDetail.toggleAttribute("readonly");
+
+    // removing taskcomplete when edit btn is clicked
+    if (parentContainer.classList.contains("taskcomplete")) {
+      parentContainer.classList.remove("taskcomplete");
     }
+
+    // Update the taskDetail value within the HTML
+    const taskInput = taskDetail.value;
+    taskDetail.setAttribute("value", taskInput); // Set the value attribute
+
+    storeInLocalStorage(); // Store the updated value
   }
 
   //checked
@@ -118,5 +141,11 @@ taskListEl.addEventListener("click", function (e) {
       tickbtnclicked.nextElementSibling.readOnly = "true";
       tickbtnclicked.nextElementSibling.focus();
     }
+    storeInLocalStorage();
+
+    //storing in local storage
   }
 });
+
+restoreFromLocalStorage();
+// localStorage.clear();
